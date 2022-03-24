@@ -1,0 +1,30 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  master:
+    image: postgres
+    restart: always
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ./postgres-master.conf:/etc/postgresql/postgresql.conf
+
+  slave:
+    image: postgres
+    restart: always
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ./postgres-slave.conf:/etc/postgresql/postgresql.conf
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8888:8080
