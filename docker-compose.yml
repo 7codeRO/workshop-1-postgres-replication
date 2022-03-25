@@ -4,7 +4,8 @@ version: '3.1'
 services:
 
   master:
-    image: postgres
+    build:
+      context: ./
     restart: always
     command: postgres -c config_file=/etc/postgresql/postgresql.conf
     environment:
@@ -12,9 +13,11 @@ services:
       POSTGRES_PASSWORD: example
     volumes:
       - ./postgres-master.conf:/etc/postgresql/postgresql.conf
+      - ./pg_hba-master.conf:/var/lib/postgresql/data/pg_hba.conf
 
   slave:
-    image: postgres
+    build:
+      context: ./
     restart: always
     command: postgres -c config_file=/etc/postgresql/postgresql.conf
     environment:
